@@ -47,7 +47,7 @@ module Towelie
   end
 
   def report_loc
-    squished_lines = @all_lines.collect {|line| line.stripped} 
+    squished_lines = @all_lines.collect {|line| line.stripped}
     uniques = squished_lines.uniq
 
     # this part should use printf but it's too bloody tedious
