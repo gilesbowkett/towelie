@@ -74,10 +74,9 @@ module Towelie
       if count > highest
         highest = count
         the_line = line
+        puts "#{highest} / #{the_line}"
       end
     end
-    puts highest
-    puts the_line
   end
 end
 
