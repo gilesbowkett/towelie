@@ -38,8 +38,6 @@ module Towelie
             current = Line.new(line, stripped, previous)
             @all_lines << current
             previous = current
-
-            @lines_per_code_fragment.count(stripped, current)
           end
         end
       end
@@ -55,14 +53,31 @@ module Towelie
     puts "unique lines of code:   " + uniques.size.to_s
     puts "duplicate lines:        " + (squished_lines.size - uniques.size).to_s
   end
-
-  def rank_repeated_lines
-    # I should switch this to use inject() - bad habit!
-    t3h_ha5h = {}
-    @lines_per_code_fragment.report_lines_more_frequently_recurring_than(200).each do |lines|
-      t3h_ha5h[lines[0].stripped] = lines
+  
+  def count_repetitions
+    counts = {}
+    @all_lines.each do |line|
+      line = line.stripped
+      if counts[line]
+        counts[line] += 1
+      else
+        counts[line] = 1
+      end
     end
-    t3h_ha5h.most_counted.each {|frequently_counted| puts t3h_ha5h[frequently_counted].size}
+    counts # need some injecty goodness here I think
+  end
+  
+  def rank_repeated_lines
+    highest = 0
+    the_line = ""
+    count_repetitions.each do |line, count|
+      if count > highest
+        highest = count
+        the_line = line
+      end
+    end
+    puts highest
+    puts the_line
   end
 end
 
