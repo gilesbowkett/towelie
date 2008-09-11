@@ -9,5 +9,16 @@ describe Towelie do
   it "identifies duplication" do
     duplication?("spec/test_data").should be_true
   end
+  it "returns no false positives when identifying duplication"
+  it "isolates duplicated blocks" do
+    duplicated_block =<<DUPLICATE_BLOCK
+
+def bar
+  "something non-unique"
+end
+
+DUPLICATE_BLOCK
+    duplicated("spec/test_data").should == duplicated_block
+  end
   it "reports unique code"
 end
