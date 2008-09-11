@@ -4,27 +4,25 @@ module Towelie
   def files(dir)
     accumulator = []
     Find.find(dir) do |filename|
-      next if File.directory? filename
+      next if File.directory? filename || filename =~ /\.git/
       accumulator << filename
     end
     accumulator
   end
-  def duplication?(dir)
-    files(dir) do |filename|
-      next if filename =~ /\.git/
-      # if filename =~ /.+\.e?rb$/
-        File.open(filename, "r") do |file|
-          # previous = current = nil
-          file.each_line do |line|
-            # next if skip?(line)
-            stripped = line.gsub(/\s/, "")
-
-            current = Line.new(line, stripped, previous)
-            @all_lines << current
-            previous = current
-          end
+  def load(dir)
+    @all_lines = []
+    files(dir).each do |filename|
+      File.open(filename, "r") do |file|
+        file.each_line do |line|
+          stripped = line.gsub(/\s/, "")
+          @all_lines << stripped
         end
-      # end
+      end
     end
+  end
+  def duplication?(dir)
+    # refactor! this loads data and analyzes it. should be separate steps.
+    load dir
+    @all_lines.uniq != @all_lines
   end
 end
