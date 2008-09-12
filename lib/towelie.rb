@@ -18,19 +18,22 @@ module Towelie
       @translations[filename] = ParseTree.translate File.read(filename)
     end
   end
+  def def_nodes
+    (@translations.values.collect do |translation|
+      (translation.collect do |node|
+        node if node.is_a? Array and node[0] == :defn
+      end).compact
+    end).compact
+  end
   def duplication?(dir)
     load dir
-    def_nodes = @translations.values.collect do |translation|
-      translation.collect do |node|
-        node if node.is_a? Array and node[0] == :defn
-      end
-    end
-    def_nodes.compact!
-    def_nodes.uniq == def_nodes
+    def_nodes.uniq != def_nodes
   end
   def duplicated(dir)
-    load dir
-    nil
+    # load dir
+    # duplicates = (def_nodes.collect do |node|
+    #   node if def_nodes.duplicates? node
+    # end).compact
   end
 end
 
