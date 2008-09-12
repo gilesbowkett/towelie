@@ -7,8 +7,7 @@ describe Towelie do
                                             "spec/test_data/second_file.rb"]
   end
   it "identifies duplication" do
-    pending
-    # duplication?("spec/test_data").should be_true
+    duplication?("spec/test_data").should be_true
   end
   it "extracts :defn nodes" do
     load("spec/test_data")
@@ -35,15 +34,12 @@ describe Towelie do
   end
   it "returns no false positives when identifying duplication"
   it "isolates duplicated blocks" do
-    pending
-#     duplicated_block =<<DUPLICATE_BLOCK
-# 
-# def bar
-#   "something non-unique"
-# end
-# 
-# DUPLICATE_BLOCK
-#     duplicated("spec/test_data").should == duplicated_block
+    duplicated_block =<<DUPLICATE_BLOCK
+def bar
+  "something non-unique"
+end
+DUPLICATE_BLOCK
+    duplicated("spec/test_data").should == duplicated_block
   end
   it "reports unique code"
 end
