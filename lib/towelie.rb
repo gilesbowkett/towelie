@@ -1,4 +1,7 @@
 require 'find'
+require 'rubygems'
+require 'parse_tree'
+require 'ruby2ruby'
 
 module Towelie
   def files(dir)
@@ -10,40 +13,24 @@ module Towelie
     accumulator
   end
   def load(dir)
-    @all_lines = []
-    @duplicate_lines = []
-
+    @translations = {}
     files(dir).each do |filename|
-
-      duplicating = false
-      dup_buffer = []
-
-      File.open(filename, "r") do |file|
-        file.each_line do |line|
-          if @all_lines.include? line
-            duplicating = true
-            dup_buffer << line
-          else
-            puts line
-            @all_lines << line
-
-            if duplicating && dup_buffer.size > 1
-              dup_buffer.each {|dup| @duplicate_lines << dup}
-            end
-            dup_buffer = []
-            duplicating = false
-          end
-        end
-      end
+      @translations[filename] = ParseTree.translate File.read(filename)
     end
   end
   def duplication?(dir)
     load dir
-    not @duplicate_lines.empty?
+    def_nodes = @translations.values.collect do |translation|
+      translation.collect do |node|
+        node if node.is_a? Array and node[0] == :defn
+      end
+    end
+    def_nodes.compact!
+    def_nodes.uniq == def_nodes
   end
   def duplicated(dir)
     load dir
-    @duplicate_lines
+    nil
   end
 end
 
