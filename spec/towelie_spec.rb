@@ -7,11 +7,12 @@ describe Towelie do
                                             "spec/test_data/second_file.rb"]
   end
   it "identifies duplication" do
-    duplication?("spec/test_data").should be_true
+    pending
+    # duplication?("spec/test_data").should be_true
   end
   it "extracts :defn nodes" do
     load("spec/test_data")
-    def_nodes.should == [ 
+    def_nodes.should == [
                           # second_file.rb
                           [:defn, :foo,
                             [:scope,
@@ -22,6 +23,7 @@ describe Towelie do
                           [:defn, :baz,
                             [:scope,
                               [:block, [:args], [:str, "also unique"]]]],
+
                           # first_file.rb
                           [:defn, :foo,
                             [:scope,
