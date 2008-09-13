@@ -20,8 +20,6 @@ module Towelie
     end
   end
   def def_nodes
-    # pitfall: the "recursion" here is hard-coded. this means Towelie probably can't handle classes
-    # or modules yet.
     accumulator = @translations.values.inject([]) do |accumulator, translation|
       _find_def_nodes(accumulator, translation)
     end
