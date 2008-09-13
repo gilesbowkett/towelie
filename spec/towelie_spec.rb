@@ -9,7 +9,9 @@ describe Towelie do
   it "identifies duplication" do
     duplication?("spec/test_data").should be_true
   end
-  it "returns no false positives when identifying duplication"
+  it "returns no false positives when identifying duplication" do
+    duplication?("spec/non_duplicating_data").should be_false
+  end
   it "extracts :defn nodes" do
     load("spec/test_data")
     def_nodes.should == [
