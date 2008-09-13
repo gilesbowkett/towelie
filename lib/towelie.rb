@@ -43,6 +43,13 @@ module Towelie
       node if def_nodes.duplicates? node
     end).compact.uniq
   end
+  def unique(dir)
+    load dir
+    duplicated = (def_nodes.collect {|element| element if def_nodes.duplicates? element}).compact
+    (def_nodes - duplicated).inject("") do |string, node|
+      string += Ruby2Ruby.new.process(node) + "\n"
+    end
+  end
 end
 
 # every method needs a dir. therefore we should have an object which takes a dir (and probably
