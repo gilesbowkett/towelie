@@ -9,6 +9,7 @@ describe Towelie do
   it "identifies duplication" do
     duplication?("spec/test_data").should be_true
   end
+  it "returns no false positives when identifying duplication"
   it "extracts :defn nodes" do
     load("spec/test_data")
     def_nodes.should == [
@@ -32,7 +33,6 @@ describe Towelie do
                               [:block, [:args], [:str, "something non-unique"]]]]
                         ]
   end
-  it "returns no false positives when identifying duplication"
   it "isolates duplicated blocks" do
     duplicated_block =<<DUPLICATE_BLOCK
 def bar
@@ -54,5 +54,16 @@ def foo
 end
 UNIQUE_BLOCK
     unique("spec/test_data").should == unique_block
+  end
+  it "reports distinct methods with the same name" do
+    homonym_block =<<HOMONYM_BLOCK
+def foo
+  "still unique"
+end
+def foo
+  "something unique"
+end
+HOMONYM_BLOCK
+    homonyms("spec/test_data").should == homonym_block
   end
 end

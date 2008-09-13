@@ -21,7 +21,8 @@ module Towelie
     end
   end
   def def_nodes
-    # this is #collect, but with an additional level of nesting
+    # this is #collect, but with an additional level of nesting. pitfall: the additional level is
+    # hard-coded. this means Towelie probably can't handle classes or modules yet.
     accumulator = []
     @translations.values.each do |translation|
       translation.each do |node|
@@ -48,6 +49,18 @@ module Towelie
     duplicated = (def_nodes.collect {|element| element if def_nodes.duplicates? element}).compact
     to_ruby(def_nodes - duplicated)
   end
+  def homonyms(dir)
+    load dir
+    homonyms = []
+    # here's some more code which should be recursive but instead hard-codes its nesting. :-p
+    def_nodes.each do |element1|
+      def_nodes.each do |element2|
+        next if element1 == element2
+        homonyms << element1 if element1[1] == element2[1]
+      end
+    end
+    to_ruby(homonyms)
+  end
   def to_ruby(nodes)
     nodes.inject("") do |string, node|
       string += Ruby2Ruby.new.process(node) + "\n"
@@ -57,3 +70,6 @@ end
 
 # every method needs a dir. therefore we should have an object which takes a dir (and probably
 # loads it) on init. also a new Ruby2Ruby might belong in the initializer, who knows.
+
+# might also be worth it to move some of these set operations out into Enumerable.
+
