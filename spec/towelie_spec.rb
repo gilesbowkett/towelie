@@ -40,6 +40,7 @@ describe Towelie do
 def bar
   "something non-unique"
 end
+
 DUPLICATE_BLOCK
     duplicated("spec/test_data").should == duplicated_block
   end
@@ -48,12 +49,15 @@ DUPLICATE_BLOCK
 def foo
   "still unique"
 end
+
 def baz
   "also unique"
 end
+
 def foo
   "something unique"
 end
+
 UNIQUE_BLOCK
     unique("spec/test_data").should == unique_block
   end
@@ -62,9 +66,11 @@ UNIQUE_BLOCK
 def foo
   "still unique"
 end
+
 def foo
   "something unique"
 end
+
 HOMONYM_BLOCK
     homonyms("spec/test_data").should == homonym_block
   end

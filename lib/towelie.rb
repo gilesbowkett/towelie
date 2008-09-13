@@ -63,7 +63,7 @@ module Towelie
   end
   def to_ruby(nodes)
     nodes.inject("") do |string, node|
-      string += Ruby2Ruby.new.process(node) + "\n"
+      string += Ruby2Ruby.new.process(node) + "\n\n"
     end
   end
 end
@@ -72,4 +72,3 @@ end
 # loads it) on init. also a new Ruby2Ruby might belong in the initializer, who knows.
 
 # might also be worth it to move some of these set operations out into Enumerable.
-
