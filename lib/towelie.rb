@@ -14,10 +14,9 @@ module Towelie
     accumulator
   end
   def load(dir)
-    # this might be something I could turn into a #collect
-    @translations = {}
-    files(dir).each do |filename|
-      @translations[filename] = ParseTree.translate File.read(filename)
+    @translations = files(dir).inject({}) do |hash, filename|
+      hash[filename] = ParseTree.translate File.read(filename)
+      hash
     end
   end
   def def_nodes
@@ -52,7 +51,6 @@ module Towelie
   def homonyms(dir)
     load dir
     homonyms = []
-    # here's some more code which should be recursive but instead hard-codes its nesting. :-p
     def_nodes.each do |element1|
       def_nodes.each do |element2|
         next if element1 == element2
