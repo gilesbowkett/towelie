@@ -5,7 +5,7 @@ require 'ruby2ruby'
 
 module Towelie
   def files(dir)
-    # Find supplies no #collect
+    # Find supplies no #inject
     accumulator = []
     Find.find(dir) do |filename|
       next if File.directory? filename || filename =~ /\.git/
