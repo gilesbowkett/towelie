@@ -36,7 +36,7 @@ module Towelie
   end
   def duplicated(dir)
     load dir
-    Ruby2Ruby.new.process(duplicates[0]) + "\n"
+    to_ruby(duplicates)
   end
   def duplicates
     (def_nodes.collect do |node|
@@ -46,7 +46,10 @@ module Towelie
   def unique(dir)
     load dir
     duplicated = (def_nodes.collect {|element| element if def_nodes.duplicates? element}).compact
-    (def_nodes - duplicated).inject("") do |string, node|
+    to_ruby(def_nodes - duplicated)
+  end
+  def to_ruby(nodes)
+    nodes.inject("") do |string, node|
       string += Ruby2Ruby.new.process(node) + "\n"
     end
   end
