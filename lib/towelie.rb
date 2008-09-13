@@ -20,15 +20,14 @@ module Towelie
     end
   end
   def def_nodes
-    # this is #collect, but with an additional level of nesting. pitfall: the additional level is
-    # hard-coded. this means Towelie probably can't handle classes or modules yet.
-    accumulator = []
-    @translations.values.each do |translation|
+    # pitfall: the "recursion" here is hard-coded. this means Towelie probably can't handle classes
+    # or modules yet.
+    accumulator = @translations.values.inject([]) do |accumulator, translation|
       translation.each do |node|
         accumulator << node if node.is_a? Array and node[0] == :defn
       end
+      accumulator
     end
-    accumulator
   end
   def duplication?(dir)
     load dir
