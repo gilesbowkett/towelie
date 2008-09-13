@@ -23,11 +23,21 @@ module Towelie
     # pitfall: the "recursion" here is hard-coded. this means Towelie probably can't handle classes
     # or modules yet.
     accumulator = @translations.values.inject([]) do |accumulator, translation|
-      translation.each do |node|
-        accumulator << node if node.is_a? Array and node[0] == :defn
-      end
-      accumulator
+      _find_def_nodes(accumulator, translation)
     end
+  end
+  def _find_def_nodes(accumulator, translation)
+    translation.each do |node|
+      case node
+      when Array
+        if node[0] == :defn
+          accumulator << node
+        else
+          _find_def_nodes(accumulator, node)
+        end
+      end
+    end
+    accumulator
   end
   def duplication?(dir)
     load dir

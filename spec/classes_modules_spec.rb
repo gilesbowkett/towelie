@@ -2,19 +2,15 @@ require 'lib/array'
 require 'lib/towelie'
 include Towelie
 
+# this is a subset of towelie_spec.rb which verifies functionality in that spec also works within
+# classes and modules.
+
 describe Towelie do
-  it "scans a directory, returning a list of files" do
-    files("spec/test_data").sort.should == ["spec/test_data/first_file.rb",
-                                            "spec/test_data/second_file.rb"]
-  end
   it "identifies duplication" do
-    duplication?("spec/test_data").should be_true
-  end
-  it "returns no false positives when identifying duplication" do
-    duplication?("spec/non_duplicating_data").should be_false
+    duplication?("spec/classes_modules").should be_true
   end
   it "extracts :defn nodes" do
-    load("spec/test_data")
+    load("spec/classes_modules")
     def_nodes.should == [
                           # second_file.rb
                           [:defn, :foo,
@@ -43,7 +39,7 @@ def bar
 end
 
 DUPLICATE_BLOCK
-    duplicated("spec/test_data").should == duplicated_block
+    duplicated("spec/classes_modules").should == duplicated_block
   end
   it "reports unique code" do
     unique_block =<<UNIQUE_BLOCK
@@ -60,7 +56,7 @@ def foo
 end
 
 UNIQUE_BLOCK
-    unique("spec/test_data").should == unique_block
+    unique("spec/classes_modules").should == unique_block
   end
   it "reports distinct methods with the same name" do
     homonym_block =<<HOMONYM_BLOCK
@@ -73,6 +69,6 @@ def foo
 end
 
 HOMONYM_BLOCK
-    homonyms("spec/test_data").should == homonym_block
+    homonyms("spec/classes_modules").should == homonym_block
   end
 end
