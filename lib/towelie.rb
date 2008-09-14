@@ -8,7 +8,7 @@ module Towelie
     # Find supplies no #inject
     accumulator = []
     Find.find(dir) do |filename|
-      next if File.directory? filename || filename =~ /\.git/
+      next if File.directory? filename or filename =~ /.*\.git.*/
       accumulator << filename
     end
     accumulator
@@ -24,8 +24,8 @@ module Towelie
       _find_def_nodes(accumulator, translation)
     end
   end
-  def _find_def_nodes(accumulator, translation)
-    translation.each do |node|
+  def _find_def_nodes(accumulator, nodes)
+    nodes.each do |node|
       case node
       when Array
         if node[0] == :defn
@@ -73,7 +73,7 @@ module Towelie
   end
 end
 
-# every method needs a dir. therefore we should have an object which takes a dir (and probably
+# most methods need a dir loaded. therefore we should have an object which takes a dir (and probably
 # loads it) on init. also a new Ruby2Ruby might belong in the initializer, who knows.
 
 # might also be worth it to move some of these set operations out into Enumerable.
