@@ -6,8 +6,6 @@ describe Array do
     ([1,1,2].duplicates? 2).should be_false
     ([1,1,2].duplicates? 1).should be_true
 
-    ([].duplicates? 4).should be_false
-    ([].duplicates? 2).should be_false
     ([].duplicates? 1).should be_false
   end
 end
