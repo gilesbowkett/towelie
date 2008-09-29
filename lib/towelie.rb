@@ -57,14 +57,11 @@ module Towelie
   def homonyms(dir)
     parse dir
     homonyms = []
-    def_nodes.each do |element1|
-      def_nodes.each do |element2|
-        next if element1 == element2
-        homonyms << element1 if element1[1] == element2[1]
+    def_nodes.stepwise do |element1, element2|
+      homonyms << element1 if element1[1] == element2[1]
+    end
           # def_node[1] is def_node's name.
           # these should probably be objects.
-      end
-    end
     to_ruby(homonyms)
   end
   def one_node_diff(dir)

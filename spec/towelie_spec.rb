@@ -55,12 +55,12 @@ end
 
 HOMONYM_BLOCK
     @one_node_diff_block =<<ONE_NODE_DIFF_BLOCK
-def foo
-  "foo"
-end
-
 def bar
   "bar"
+end
+
+def foo
+  "foo"
 end
 
 ONE_NODE_DIFF_BLOCK
