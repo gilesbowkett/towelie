@@ -90,7 +90,4 @@ HOMONYM_BLOCK
   it "reports metadata" do
     pending
   end
-  it "gets me a sandwich" do
-    pending
-  end
 end
