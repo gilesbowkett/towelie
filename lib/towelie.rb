@@ -74,6 +74,7 @@ module Towelie
     one_nodes = {}
     def_nodes.stepwise do |def_node_1, def_node_2|
       one_nodes[def_node_1.name] = def_node_1 if 1 == (def_node_1.body - def_node_2.body).size
+      # note this hash approach fails to record multiple one-node-diff methods with the same name
     end
     to_ruby(one_nodes.values)
   end
