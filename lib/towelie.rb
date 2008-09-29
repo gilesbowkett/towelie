@@ -20,9 +20,8 @@ module Towelie
     end
   end
   def def_nodes
-    accumulator = @translations.values.inject([]) do |accumulator, translation|
-      _find_def_nodes(accumulator, translation)
-    end
+    accumulator = []
+    _find_def_nodes(accumulator, @translations)
   end
   def _find_def_nodes(accumulator, nodes)
     nodes.each do |node|
@@ -62,14 +61,24 @@ module Towelie
       def_nodes.each do |element2|
         next if element1 == element2
         homonyms << element1 if element1[1] == element2[1]
+          # def_node[1] is def_node's name.
+          # these should probably be objects.
       end
     end
     to_ruby(homonyms)
   end
   def one_node_diff(dir)
-    # parse dir
-    # @translations
-    pending
+    parse dir
+    one_nodes = {}
+    def_nodes.each do |def_node_1|
+      def_nodes.each do |def_node_2|
+        next if def_node_1 == def_node_2
+        one_nodes[def_node_1[1]] = def_node_1 if 1 == (def_node_1[2] - def_node_2[2]).size
+          # def_node[1] is def_node's name.
+          # these should probably be objects.
+      end
+    end
+    to_ruby(one_nodes.values)
   end
   def to_ruby(nodes)
     nodes.inject("") do |string, node|
