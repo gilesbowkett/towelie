@@ -59,8 +59,7 @@ module Towelie
   end
   def unique(dir)
     parse dir
-    duplicated = (def_nodes.collect {|element| element if def_nodes.duplicates? element}).compact
-    to_ruby(def_nodes - duplicated)
+    to_ruby(def_nodes - duplicates)
   end
   def homonyms(dir)
     parse dir
