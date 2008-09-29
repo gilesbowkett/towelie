@@ -40,8 +40,6 @@ module Towelie
     end
     accumulator
   end
-  def _find_def_nodes(accumulator, nodes)
-  end
   def duplication?(dir)
     parse dir
     def_nodes.uniq != def_nodes
