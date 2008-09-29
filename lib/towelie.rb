@@ -8,7 +8,7 @@ module Towelie
     # Find supplies no #inject
     accumulator = []
     Find.find(dir) do |filename|
-      next if File.directory? filename or filename =~ /.*\.git.*/
+      next if File.directory? filename or filename =~ /.*\.(git|svn).*/
       accumulator << filename
     end
     accumulator
