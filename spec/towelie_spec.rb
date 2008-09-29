@@ -64,6 +64,18 @@ def foo
 end
 
 ONE_NODE_DIFF_BLOCK
+    @bigger_one_node_diff_block =<<BIGGER_ONE_NODE_DIFF_BLOCK
+def bar
+  puts("muppetfuckers")
+  @variable = "bar"
+end
+
+def foo
+  puts("muppetfuckers")
+  @variable = "foo"
+end
+
+BIGGER_ONE_NODE_DIFF_BLOCK
   end
   it "scans a directory, returning a list of files" do
     files("spec/test_data").sort.should == ["spec/test_data/first_file.rb",
@@ -96,5 +108,6 @@ ONE_NODE_DIFF_BLOCK
   end
   it "reports methods which differ only by one node" do
     one_node_diff("spec/one_node_diff").should == @one_node_diff_block
+    one_node_diff("spec/larger_one_node_diff").should == @bigger_one_node_diff_block
   end
 end
