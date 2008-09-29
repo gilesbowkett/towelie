@@ -76,6 +76,10 @@ module Towelie
         one_nodes[def_node_1[1]] = def_node_1 if 1 == (def_node_1[2] - def_node_2[2]).size
           # def_node[1] is def_node's name.
           # these should probably be objects.
+          
+          # note also that this means when you have more than one one-node-diff method
+          # with the same name, the last such method analyzed is the one that goes in
+          # the hash. fail!
       end
     end
     to_ruby(one_nodes.values)
