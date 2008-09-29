@@ -29,7 +29,15 @@ module Towelie
       when Array
         if node[0] == :defn
           accumulator << node
-        else
+          class << node
+            def name
+              self[1]
+            end
+            def body
+              self[2]
+            end
+          end
+          else
           _find_def_nodes(accumulator, node)
         end
       end
@@ -57,27 +65,16 @@ module Towelie
   def homonyms(dir)
     parse dir
     homonyms = []
-    def_nodes.stepwise do |element1, element2|
-      homonyms << element1 if element1[1] == element2[1]
+    def_nodes.stepwise do |def_node_1, def_node_2|
+      homonyms << def_node_1 if def_node_1.name == def_node_2.name
     end
-          # def_node[1] is def_node's name.
-          # these should probably be objects.
     to_ruby(homonyms)
   end
   def one_node_diff(dir)
     parse dir
     one_nodes = {}
-    def_nodes.each do |def_node_1|
-      def_nodes.each do |def_node_2|
-        next if def_node_1 == def_node_2
-        one_nodes[def_node_1[1]] = def_node_1 if 1 == (def_node_1[2] - def_node_2[2]).size
-          # def_node[1] is def_node's name.
-          # these should probably be objects.
-          
-          # note also that this means when you have more than one one-node-diff method
-          # with the same name, the last such method analyzed is the one that goes in
-          # the hash. fail!
-      end
+    def_nodes.stepwise do |def_node_1, def_node_2|
+      one_nodes[def_node_1.name] = def_node_1 if 1 == (def_node_1.body - def_node_2.body).size
     end
     to_ruby(one_nodes.values)
   end
@@ -91,4 +88,5 @@ end
 # most methods need a dir loaded. therefore we should have an object which takes a dir (and probably
 # loads it) on init. also a new Ruby2Ruby might belong in the initializer, who knows.
 
-# might also be worth it to move some of these set operations out into Enumerable.
+# when I switch to objects, it'll be much prettier to parameterize one_node_diff to a general
+# "def diff(threshold)" style.
