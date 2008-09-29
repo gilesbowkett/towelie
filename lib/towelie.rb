@@ -13,7 +13,7 @@ module Towelie
     end
     accumulator
   end
-  def load(dir)
+  def parse(dir)
     @translations = files(dir).inject({}) do |hash, filename|
       hash[filename] = ParseTree.translate File.read(filename)
       hash
@@ -38,11 +38,11 @@ module Towelie
     accumulator
   end
   def duplication?(dir)
-    load dir
+    parse dir
     def_nodes.uniq != def_nodes
   end
   def duplicated(dir)
-    load dir
+    parse dir
     to_ruby(duplicates)
   end
   def duplicates
@@ -51,12 +51,12 @@ module Towelie
     end).compact.uniq
   end
   def unique(dir)
-    load dir
+    parse dir
     duplicated = (def_nodes.collect {|element| element if def_nodes.duplicates? element}).compact
     to_ruby(def_nodes - duplicated)
   end
   def homonyms(dir)
-    load dir
+    parse dir
     homonyms = []
     def_nodes.each do |element1|
       def_nodes.each do |element2|

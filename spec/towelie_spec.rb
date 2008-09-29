@@ -54,6 +54,16 @@ def foo
 end
 
 HOMONYM_BLOCK
+    @one_node_diff_block =<<ONE_NODE_DIFF_BLOCK
+def foo
+  "foo"
+end
+
+def bar
+  "bar"
+end
+
+ONE_NODE_DIFF_BLOCK
   end
   it "scans a directory, returning a list of files" do
     files("spec/test_data").sort.should == ["spec/test_data/first_file.rb",
@@ -67,9 +77,9 @@ HOMONYM_BLOCK
     duplication?("spec/non_duplicating_data").should be_false
   end
   it "extracts :defn nodes" do
-    load("spec/test_data")
+    parse("spec/test_data")
     def_nodes.should == @the_nodes
-    load("spec/classes_modules")
+    parse("spec/classes_modules")
     def_nodes.should == @the_nodes
   end
   it "isolates duplicated blocks" do
@@ -83,11 +93,5 @@ HOMONYM_BLOCK
   it "reports distinct methods with the same name" do
     homonyms("spec/test_data").should == @homonym_block
     homonyms("spec/classes_modules").should == @homonym_block
-  end
-  it "reports methods which differ only by one node" do
-    pending
-  end
-  it "reports metadata" do
-    pending
   end
 end
