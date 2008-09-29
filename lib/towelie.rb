@@ -66,6 +66,11 @@ module Towelie
     end
     to_ruby(homonyms)
   end
+  def one_node_diff(dir)
+    # parse dir
+    # @translations
+    pending
+  end
   def to_ruby(nodes)
     nodes.inject("") do |string, node|
       string += Ruby2Ruby.new.process(node) + "\n\n"

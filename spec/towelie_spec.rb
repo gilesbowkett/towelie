@@ -94,4 +94,7 @@ ONE_NODE_DIFF_BLOCK
     homonyms("spec/test_data").should == @homonym_block
     homonyms("spec/classes_modules").should == @homonym_block
   end
+  it "reports methods which differ only by one node" do
+    one_node_diff("spec/one_node_diff").should == @one_node_diff_block
+  end
 end
