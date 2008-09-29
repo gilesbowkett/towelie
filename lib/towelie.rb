@@ -37,7 +37,7 @@ module Towelie
               self[2]
             end
           end
-          else
+        else
           _find_def_nodes(accumulator, node)
         end
       end
