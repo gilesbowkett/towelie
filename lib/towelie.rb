@@ -19,11 +19,7 @@ module Towelie
       hash
     end
   end
-  def def_nodes
-    accumulator = []
-    _find_def_nodes(accumulator, @translations)
-  end
-  def _find_def_nodes(accumulator, nodes)
+  def def_nodes(accumulator = [], nodes = @translations)
     nodes.each do |node|
       case node
       when Array
@@ -38,11 +34,13 @@ module Towelie
             end
           end
         else
-          _find_def_nodes(accumulator, node)
+          def_nodes(accumulator, node)
         end
       end
     end
     accumulator
+  end
+  def _find_def_nodes(accumulator, nodes)
   end
   def duplication?(dir)
     parse dir
@@ -87,5 +85,4 @@ end
 # most methods need a dir loaded. therefore we should have an object which takes a dir (and probably
 # loads it) on init. also a new Ruby2Ruby might belong in the initializer, who knows.
 
-# when I switch to objects, it'll be much prettier to parameterize one_node_diff to a general
-# "def diff(threshold)" style.
+# ironically, Towelie itself is very not-DRY. lots of "parse dir"; lots of "to_ruby(:foo)".
