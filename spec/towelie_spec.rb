@@ -84,4 +84,13 @@ HOMONYM_BLOCK
     homonyms("spec/test_data").should == @homonym_block
     homonyms("spec/classes_modules").should == @homonym_block
   end
+  it "reports methods which differ only by one node" do
+    pending
+  end
+  it "reports metadata" do
+    pending
+  end
+  it "gets me a sandwich" do
+    pending
+  end
 end
