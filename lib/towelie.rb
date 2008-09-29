@@ -15,8 +15,7 @@ module Towelie
   end
   def parse(dir)
     @translations = files(dir).inject({}) do |hash, filename|
-      hash[filename] = ParseTree.translate File.read(filename)
-      hash
+      hash[filename] = ParseTree.translate File.read(filename) ; hash
     end
   end
   def def_nodes(accumulator = [], nodes = @translations)
