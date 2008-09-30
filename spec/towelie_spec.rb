@@ -107,25 +107,25 @@ TWO_NODE_DIFF_BLOCK
     def_nodes.should == @the_nodes
   end
   it "isolates duplicated blocks" do
-    duplicated("spec/test_data").should == @duplicated_block
-    duplicated("spec/classes_modules").should == @duplicated_block
+    to_ruby(duplicated("spec/test_data")).should == @duplicated_block
+    to_ruby(duplicated("spec/classes_modules")).should == @duplicated_block
   end
   it "reports unique code" do
-    unique("spec/test_data").should == @unique_block
-    unique("spec/classes_modules").should == @unique_block
+    to_ruby(unique("spec/test_data")).should == @unique_block
+    to_ruby(unique("spec/classes_modules")).should == @unique_block
   end
   it "reports distinct methods with the same name" do
-    homonyms("spec/test_data").should == @homonym_block
-    homonyms("spec/classes_modules").should == @homonym_block
+    to_ruby(homonyms("spec/test_data")).should == @homonym_block
+    to_ruby(homonyms("spec/classes_modules")).should == @homonym_block
   end
   it "reports methods which differ only by one node" do
     parse("spec/one_node_diff")
-    diff(1).should == @one_node_diff_block
+    to_ruby(diff(1)).should == @one_node_diff_block
     parse("spec/larger_one_node_diff")
-    diff(1).should == @bigger_one_node_diff_block
+    to_ruby(diff(1)).should == @bigger_one_node_diff_block
   end
   it "reports methods which differ by arbitrary numbers of nodes" do
     parse("spec/two_node_diff")
-    diff(2).should == @two_node_diff_block
+    to_ruby(diff(2)).should == @two_node_diff_block
   end
 end

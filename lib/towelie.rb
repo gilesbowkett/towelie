@@ -45,7 +45,7 @@ module Towelie
   end
   def duplicated(dir)
     parse dir
-    to_ruby(duplicates)
+    duplicates
   end
   def duplicates
     (def_nodes.collect do |node|
@@ -54,7 +54,7 @@ module Towelie
   end
   def unique(dir)
     parse dir
-    to_ruby(def_nodes - duplicates)
+    def_nodes - duplicates
   end
   def homonyms(dir)
     parse dir
@@ -62,7 +62,7 @@ module Towelie
     def_nodes.stepwise do |def_node_1, def_node_2|
       homonyms << def_node_1 if def_node_1.name == def_node_2.name
     end
-    to_ruby(homonyms)
+    homonyms
   end
   def diff(threshold)
     diff_nodes = {}
@@ -70,7 +70,7 @@ module Towelie
       diff_nodes[def_node_1.name] = def_node_1 if threshold >= (def_node_1.body - def_node_2.body).size
       # note this hash approach fails to record multiple one-node-diff methods with the same name
     end
-    to_ruby(diff_nodes.values)
+    diff_nodes.values
   end
   def to_ruby(nodes)
     nodes.inject("") do |string, node|
@@ -82,4 +82,4 @@ end
 # most methods need a dir loaded. therefore we should have an object which takes a dir (and probably
 # loads it) on init. also a new Ruby2Ruby might belong in the initializer, who knows.
 
-# ironically, Towelie itself is very not-DRY. lots of "parse dir"; lots of "to_ruby(:foo)".
+# ironically, Towelie itself is very not-DRY. lots of "parse dir".
