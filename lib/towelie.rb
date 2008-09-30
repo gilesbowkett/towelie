@@ -47,7 +47,7 @@ module Towelie
   
   def duplication?(dir)
     parse dir
-    method_definitions.uniq != method_definitions
+    not duplicates.empty?
   end
   def duplicated(dir)
     parse dir
