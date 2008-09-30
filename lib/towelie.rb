@@ -4,6 +4,9 @@ require 'parse_tree'
 require 'ruby2ruby'
 
 module Towelie
+  
+  # model
+  
   def files(dir)
     # Find supplies no #inject
     accumulator = []
@@ -14,8 +17,8 @@ module Towelie
     accumulator
   end
   def parse(dir)
-    @nodes = files(dir).inject({}) do |hash, filename|
-      hash[filename] = ParseTree.translate File.read(filename) ; hash
+    @nodes = files(dir).inject([]) do |array, filename|
+      array << (ParseTree.translate File.read(filename)) ; array
     end
   end
   def method_definitions(accumulator = [], nodes = @nodes)
@@ -39,6 +42,9 @@ module Towelie
     end
     accumulator
   end
+  
+  # controller
+  
   def duplication?(dir)
     parse dir
     method_definitions.uniq != method_definitions
@@ -74,6 +80,9 @@ module Towelie
     end
     diff_nodes.values
   end
+  
+  # view
+  
   def to_ruby(nodes)
     nodes.inject("") do |string, node|
       string += Ruby2Ruby.new.process(node) + "\n\n"
@@ -85,3 +94,10 @@ end
 # loads it) on init. also a new Ruby2Ruby might belong in the initializer, who knows.
 
 # ironically, Towelie itself is very not-DRY. lots of "parse dir".
+
+# one thing I've been doing consistently is parsing the dir and collecting the method definitions.
+# further, everything here assumes that this has happened. therefore! I think A) I should write some
+# code which *ensures* it always happens and B) I think I should incorporate method definition
+# collecting into the process where I loop through filenames. the reason, of course, is that it
+# allows me to trivially collect filenames in the process, and thereby obtain at least the most
+# basic metadata.
