@@ -1,36 +1,30 @@
 module Towelie
   module CodeBase
-    def files(dir)
-      # Find supplies no #inject
-      accumulator = []
+    def parse(dir)
+      @method_definitions = []
       Find.find(dir) do |filename|
         next if File.directory? filename or filename =~ /.*\.(git|svn).*/
-        accumulator << filename
-      end
-      accumulator
-    end
-    def parse(dir)
-      @nodes = files(dir).inject([]) do |array, filename|
-        array << (ParseTree.translate File.read(filename)) ; array
+        extract_definitions(@method_definitions, (ParseTree.translate File.read(filename)), filename)
       end
     end
-    def method_definitions(accumulator = [], nodes = @nodes)
-      nodes.each do |node|
-        case node
-        when Array
-          if node[0] == :defn
-            accumulator << node
-            class << node
-              def name
-                self[1]
-              end
-              def body
-                self[2]
-              end
+    def extract_definitions(accumulator, nodes, filename)
+      case nodes
+      when Array
+        if nodes[0] == :defn
+          accumulator << nodes
+          nodes.instance_eval <<-ACCESSORS
+            def name
+              self[1]
             end
-          else
-            method_definitions(accumulator, node)
-          end
+            def body
+              self[2]
+            end
+            def filename
+              "#{filename}"
+            end
+          ACCESSORS
+        else
+          nodes.each {|node| extract_definitions(accumulator, node, filename)}
         end
       end
       accumulator

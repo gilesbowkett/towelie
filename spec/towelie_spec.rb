@@ -89,10 +89,6 @@ end
 
 TWO_NODE_DIFF_BLOCK
   end
-  it "scans a directory, returning a list of files" do
-    files("spec/test_data").sort.should == ["spec/test_data/first_file.rb",
-                                            "spec/test_data/second_file.rb"]
-  end
   it "identifies duplication" do
     duplication?("spec/test_data").should be_true
     duplication?("spec/classes_modules").should be_true
@@ -102,9 +98,9 @@ TWO_NODE_DIFF_BLOCK
   end
   it "extracts :defn nodes" do
     parse("spec/test_data")
-    method_definitions.should == @the_nodes
+    @method_definitions.should == @the_nodes
     parse("spec/classes_modules")
-    method_definitions.should == @the_nodes
+    @method_definitions.should == @the_nodes
   end
   it "isolates duplicated blocks" do
     to_ruby(duplicated("spec/test_data")).should == @duplicated_block
@@ -126,6 +122,11 @@ TWO_NODE_DIFF_BLOCK
   end
   it "reports methods which differ by arbitrary numbers of nodes" do
     parse("spec/two_node_diff")
+    @method_definitions.should_not be_empty
     to_ruby(diff(2)).should == @two_node_diff_block
+  end
+  it "attaches filenames to individual nodes" do
+    parse("spec/two_node_diff")
+    @method_definitions[0].filename.should == "spec/two_node_diff/second_file.rb"
   end
 end
