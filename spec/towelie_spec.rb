@@ -102,9 +102,9 @@ TWO_NODE_DIFF_BLOCK
   end
   it "extracts :defn nodes" do
     parse("spec/test_data")
-    def_nodes.should == @the_nodes
+    method_definitions.should == @the_nodes
     parse("spec/classes_modules")
-    def_nodes.should == @the_nodes
+    method_definitions.should == @the_nodes
   end
   it "isolates duplicated blocks" do
     to_ruby(duplicated("spec/test_data")).should == @duplicated_block

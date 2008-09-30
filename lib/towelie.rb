@@ -14,11 +14,11 @@ module Towelie
     accumulator
   end
   def parse(dir)
-    @translations = files(dir).inject({}) do |hash, filename|
+    @nodes = files(dir).inject({}) do |hash, filename|
       hash[filename] = ParseTree.translate File.read(filename) ; hash
     end
   end
-  def def_nodes(accumulator = [], nodes = @translations)
+  def method_definitions(accumulator = [], nodes = @nodes)
     nodes.each do |node|
       case node
       when Array
@@ -33,7 +33,7 @@ module Towelie
             end
           end
         else
-          def_nodes(accumulator, node)
+          method_definitions(accumulator, node)
         end
       end
     end
@@ -41,34 +41,36 @@ module Towelie
   end
   def duplication?(dir)
     parse dir
-    def_nodes.uniq != def_nodes
+    method_definitions.uniq != method_definitions
   end
   def duplicated(dir)
     parse dir
     duplicates
   end
   def duplicates
-    (def_nodes.collect do |node|
-      node if def_nodes.duplicates? node
+    (method_definitions.collect do |node|
+      node if method_definitions.duplicates? node
     end).compact.uniq
   end
   def unique(dir)
     parse dir
-    def_nodes - duplicates
+    method_definitions - duplicates
   end
   def homonyms(dir)
     parse dir
     homonyms = []
-    def_nodes.stepwise do |def_node_1, def_node_2|
-      homonyms << def_node_1 if def_node_1.name == def_node_2.name
+    method_definitions.stepwise do |method_definition_1, method_definition_2|
+      homonyms << method_definition_1 if method_definition_1.name == method_definition_2.name
     end
     homonyms
   end
   def diff(threshold)
     diff_nodes = {}
-    def_nodes.stepwise do |def_node_1, def_node_2|
-      diff_nodes[def_node_1.name] = def_node_1 if threshold >= (def_node_1.body - def_node_2.body).size
-      # note this hash approach fails to record multiple one-node-diff methods with the same name
+    method_definitions.stepwise do |method_definition_1, method_definition_2|
+      if threshold >= (method_definition_1.body - method_definition_2.body).size
+        diff_nodes[method_definition_1.name] = method_definition_1
+        # note this hash approach fails to record multiple one-node-diff methods with the same name
+      end
     end
     diff_nodes.values
   end
