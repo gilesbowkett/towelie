@@ -17,6 +17,8 @@ class Towelie
     @model = Model.new
     @view = View.new
   end
+  delegate_thru_model :parse, :duplication?, :method_definitions
+  delegate_thru_view :duplicated, :unique, :homonyms, :diff
 end
 
 # most methods need a dir loaded. therefore we should have an object which takes a dir (and probably

@@ -1,4 +1,4 @@
-class Towelie  
+class Towelie
   class << self
     def delegate_thru_view(*method_names)
       method_names.each do |method_name|
@@ -19,6 +19,4 @@ class Towelie
       end
     end
   end
-  delegate_thru_model :parse, :duplication?, :method_definitions
-  delegate_thru_view :duplicated, :unique, :homonyms, :diff
 end
