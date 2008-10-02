@@ -18,12 +18,13 @@ require "#{File.dirname(__FILE__) + "/"}controller"
 class Towelie
   def initialize(view_format)
     @model = Model.new
-    @view = case view_format
+    template = case view_format
     when :text
-      TextView.new
-    when :erb
-      ErbView.new
+      "text.erb"
+    when :console
+      "console.erb"
     end
+    @view = View.new(template)
   end
   delegate_thru_model :parse, :duplication?, :method_definitions
   delegate_thru_view :duplicated, :unique, :homonyms, :diff
