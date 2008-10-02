@@ -10,8 +10,6 @@ require "#{File.dirname(__FILE__) + "/"}code_base"
 require "#{File.dirname(__FILE__) + "/"}node_analysis"
 require "#{File.dirname(__FILE__) + "/"}model"
 require "#{File.dirname(__FILE__) + "/"}view"
-require "#{File.dirname(__FILE__) + "/"}text_view"
-require "#{File.dirname(__FILE__) + "/"}erb_view"
 require "#{File.dirname(__FILE__) + "/"}controller"
 
 
