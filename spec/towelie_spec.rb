@@ -3,7 +3,7 @@ require 'lib/towelie'
 
 describe Towelie do
   before(:each) do
-    @towelie = Towelie.new
+    @towelie = Towelie.new(:text)
   end
   before(:all) do
     @the_nodes = [

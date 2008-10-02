@@ -9,13 +9,20 @@ require "#{File.dirname(__FILE__) + "/"}code_base"
 require "#{File.dirname(__FILE__) + "/"}node_analysis"
 require "#{File.dirname(__FILE__) + "/"}model"
 require "#{File.dirname(__FILE__) + "/"}view"
+require "#{File.dirname(__FILE__) + "/"}text_view"
+require "#{File.dirname(__FILE__) + "/"}erb_view"
 require "#{File.dirname(__FILE__) + "/"}controller"
 
 
 class Towelie
-  def initialize
+  def initialize(view_format)
     @model = Model.new
-    @view = View.new
+    @view = case view_format
+    when :text
+      TextView.new
+    when :erb
+      ErbView.new
+    end
   end
   delegate_thru_model :parse, :duplication?, :method_definitions
   delegate_thru_view :duplicated, :unique, :homonyms, :diff
