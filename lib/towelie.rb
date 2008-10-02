@@ -1,4 +1,5 @@
 require 'find'
+require 'erb'
 require 'rubygems'
 require 'parse_tree'
 require 'ruby2ruby'

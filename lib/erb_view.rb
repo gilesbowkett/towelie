@@ -1,7 +1,5 @@
 class ErbView < View
   def render(nodes)
-    body = to_ruby(nodes.body)
-    name = nodes.name
-    filename = nodes.filename
+    ERB.new(File.read("#{File.dirname(__FILE__) + "/"}view.erb")).result(binding)
   end
 end
