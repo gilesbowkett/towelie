@@ -5,26 +5,6 @@ describe Towelie do
     @towelie = Towelie.new(:console)
   end
   before(:all) do
-    @the_nodes = [
-                  # second_file.rb
-                  [:defn, :foo,
-                    [:scope,
-                      [:block, [:args], [:str, "still unique"]]]],
-                  [:defn, :bar,
-                    [:scope,
-                      [:block, [:args], [:str, "something non-unique"]]]],
-                  [:defn, :baz,
-                    [:scope,
-                      [:block, [:args], [:str, "also unique"]]]],
-
-                  # first_file.rb
-                  [:defn, :foo,
-                    [:scope,
-                      [:block, [:args], [:str, "something unique"]]]],
-                  [:defn, :bar,
-                    [:scope,
-                      [:block, [:args], [:str, "something non-unique"]]]]
-                 ]
     @duplicated_block =<<DUPLICATE_BLOCK
 def bar
   "something non-unique"
@@ -89,24 +69,6 @@ def foo
 end
 
 TWO_NODE_DIFF_BLOCK
-  end
-  it "identifies duplication" do
-    @towelie.parse("spec/test_data")
-    @towelie.duplication?.should be_true
-
-    @towelie.parse("spec/classes_modules")
-    @towelie.duplication?.should be_true
-  end
-  it "returns no false positives when identifying duplication" do
-    @towelie.parse("spec/non_duplicating_data")
-    @towelie.duplication?.should be_false
-  end
-  it "extracts :defn nodes" do
-    @towelie.parse("spec/test_data")
-    @towelie.method_definitions.should == @the_nodes
-    
-    @towelie.parse("spec/classes_modules")
-    @towelie.method_definitions.should == @the_nodes
   end
   it "isolates duplicated blocks" do
     @towelie.parse("spec/test_data")
