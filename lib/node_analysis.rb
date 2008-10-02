@@ -1,11 +1,9 @@
 class Model
   module NodeAnalysis
-    def duplication?(dir)
-      parse dir
+    def duplication?
       not duplicates.empty?
     end
-    def duplicated(dir)
-      parse dir
+    def duplicated
       duplicates
     end
     def duplicates
@@ -13,12 +11,10 @@ class Model
         node if @method_definitions.duplicates? node
       end).compact.uniq
     end
-    def unique(dir)
-      parse dir
+    def unique
       @method_definitions - duplicates
     end
-    def homonyms(dir)
-      parse dir
+    def homonyms
       homonyms = []
       # this picks up duplicates as well as homonyms, since a duplicate is technically also a homonym;
       # and I should probably run .uniq on it also.

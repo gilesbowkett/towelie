@@ -92,33 +92,48 @@ end
 TWO_NODE_DIFF_BLOCK
   end
   it "identifies duplication" do
-    @towelie.duplication?("spec/test_data").should be_true
-    @towelie.duplication?("spec/classes_modules").should be_true
+    @towelie.parse("spec/test_data")
+    @towelie.duplication?.should be_true
+
+    @towelie.parse("spec/classes_modules")
+    @towelie.duplication?.should be_true
   end
   it "returns no false positives when identifying duplication" do
-    @towelie.duplication?("spec/non_duplicating_data").should be_false
+    @towelie.parse("spec/non_duplicating_data")
+    @towelie.duplication?.should be_false
   end
   it "extracts :defn nodes" do
     @towelie.parse("spec/test_data")
     @towelie.method_definitions.should == @the_nodes
+    
     @towelie.parse("spec/classes_modules")
     @towelie.method_definitions.should == @the_nodes
   end
   it "isolates duplicated blocks" do
-    @towelie.duplicated("spec/test_data").should == @duplicated_block
-    @towelie.duplicated("spec/classes_modules").should == @duplicated_block
+    @towelie.parse("spec/test_data")
+    @towelie.duplicated.should == @duplicated_block
+
+    @towelie.parse("spec/classes_modules")
+    @towelie.duplicated.should == @duplicated_block
   end
   it "reports unique code" do
-    @towelie.unique("spec/test_data").should == @unique_block
-    @towelie.unique("spec/classes_modules").should == @unique_block
+    @towelie.parse("spec/test_data")
+    @towelie.unique.should == @unique_block
+
+    @towelie.parse("spec/classes_modules")
+    @towelie.unique.should == @unique_block
   end
   it "reports distinct methods with the same name" do
-    @towelie.homonyms("spec/test_data").should == @homonym_block
-    @towelie.homonyms("spec/classes_modules").should == @homonym_block
+    @towelie.parse("spec/test_data")
+    @towelie.homonyms.should == @homonym_block
+    
+    @towelie.parse("spec/classes_modules")
+    @towelie.homonyms.should == @homonym_block
   end
   it "reports methods which differ only by one node" do
     @towelie.parse("spec/one_node_diff")
     @towelie.diff(1).should == @one_node_diff_block
+
     @towelie.parse("spec/larger_one_node_diff")
     @towelie.diff(1).should == @bigger_one_node_diff_block
   end
