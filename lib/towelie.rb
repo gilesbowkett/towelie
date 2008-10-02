@@ -9,34 +9,13 @@ require "#{File.dirname(__FILE__) + "/"}code_base"
 require "#{File.dirname(__FILE__) + "/"}node_analysis"
 require "#{File.dirname(__FILE__) + "/"}model"
 require "#{File.dirname(__FILE__) + "/"}view"
+require "#{File.dirname(__FILE__) + "/"}controller"
 
 
 class Towelie
   def initialize
     @model = Model.new
     @view = View.new
-  end
-  def parse(dir)
-    @model.parse(dir)
-  end
-  alias :dir= :parse
-  def duplication?(dir)
-    @model.duplication?(dir)
-  end
-  def method_definitions
-    @model.method_definitions
-  end
-  def duplicated(dir)
-    @view.to_ruby(@model.duplicated(dir))
-  end
-  def unique(dir)
-    @view.to_ruby(@model.unique(dir))
-  end
-  def homonyms(dir)
-    @view.to_ruby(@model.homonyms(dir))
-  end
-  def diff(threshold)
-    @view.to_ruby(@model.diff(threshold))
   end
 end
 

@@ -99,7 +99,7 @@ TWO_NODE_DIFF_BLOCK
     @towelie.duplication?("spec/non_duplicating_data").should be_false
   end
   it "extracts :defn nodes" do
-    @towelie.dir = "spec/test_data"
+    @towelie.parse("spec/test_data")
     @towelie.method_definitions.should == @the_nodes
     @towelie.parse("spec/classes_modules")
     @towelie.method_definitions.should == @the_nodes

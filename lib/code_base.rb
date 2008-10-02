@@ -7,7 +7,6 @@ class Model
         extract_definitions(@method_definitions, (ParseTree.translate File.read(filename)), filename)
       end
     end
-    alias :dir= :parse
     def extract_definitions(accumulator, nodes, filename)
       case nodes
       when Array
