@@ -1,4 +1,4 @@
-module Towelie
+class Model
   module NodeAnalysis
     def duplication?(dir)
       parse dir
@@ -39,3 +39,5 @@ module Towelie
     end
   end
 end
+
+# both uses of stepwise are actually injects. therefore I should change them.

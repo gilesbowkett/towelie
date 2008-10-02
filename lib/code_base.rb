@@ -1,4 +1,4 @@
-module Towelie
+class Model
   module CodeBase
     def parse(dir)
       @method_definitions = []
@@ -7,6 +7,7 @@ module Towelie
         extract_definitions(@method_definitions, (ParseTree.translate File.read(filename)), filename)
       end
     end
+    alias :dir= :parse
     def extract_definitions(accumulator, nodes, filename)
       case nodes
       when Array
