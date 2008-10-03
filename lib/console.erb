@@ -1,3 +1,4 @@
-<% nodes.each do |node| %><%= node.filename %>
-<% end %>
-<%= to_ruby(nodes) %>
+found in:<% nodes.each do |node| %>
+  <%= node.filename %><% end %>
+
+<%= to_ruby(nodes[0]) %>

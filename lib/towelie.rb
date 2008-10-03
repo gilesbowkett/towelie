@@ -27,7 +27,7 @@ class Towelie
   delegate_thru_model :parse, :duplication?, :method_definitions
   delegate_thru_view :unique, :homonyms, :diff
   def duplicated(*args)
-    @view.render(@model.duplicated(*args).uniq)
+    @view.render(@model.duplicated(*args))
   end
 end
 
