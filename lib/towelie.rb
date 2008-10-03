@@ -25,7 +25,10 @@ class Towelie
     @view = View.new(template)
   end
   delegate_thru_model :parse, :duplication?, :method_definitions
-  delegate_thru_view :duplicated, :unique, :homonyms, :diff
+  delegate_thru_view :unique, :homonyms, :diff
+  def duplicated(*args)
+    @view.render(@model.duplicated(*args).uniq)
+  end
 end
 
 # most methods need a dir loaded. therefore we should have an object which takes a dir (and probably

@@ -9,7 +9,7 @@ class Model
     def duplicates
       (@method_definitions.collect do |node|
         node if @method_definitions.duplicates? node
-      end).compact.uniq
+      end).compact
     end
     def unique
       @method_definitions - duplicates
