@@ -6,9 +6,13 @@ describe Towelie do
   end
   before(:all) do
     @duplicated_block =<<DUPLICATE_BLOCK
+
+spec/test_data/second_file.rb
+
 def bar
   "something non-unique"
 end
+
 
 DUPLICATE_BLOCK
     @unique_block =<<UNIQUE_BLOCK
