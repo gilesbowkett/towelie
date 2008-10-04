@@ -4,7 +4,7 @@ class Towelie
       method_names.each do |method_name|
         class_eval <<-METHOD
         def #{method_name}(*args)
-          @view.render(@model.#{method_name}(*args))
+          @view.render(:nodes => @model.#{method_name}(*args))
         end
         METHOD
       end
@@ -13,7 +13,7 @@ class Towelie
       method_names.each do |method_name|
         class_eval <<-METHOD
         def #{method_name}(*args)
-          @model.#{method_name} *args
+          @model.#{method_name}(*args)
         end
         METHOD
       end

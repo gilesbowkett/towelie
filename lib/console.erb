@@ -1,4 +1,9 @@
-found in:<% nodes.each do |node| %>
-  <%= node.filename %><% end %>
+<% options[:unique_nodes].each do |unique_node| %>
+found in:
+<% options[:nodes].each do |node| %>
+<%= "  " + node.filename + "\n" if node.body == unique_node.body %>
+<% end %>
 
-<%= to_ruby(nodes[0]) %>
+<%= to_ruby(unique_node) %>
+
+<% end %>
