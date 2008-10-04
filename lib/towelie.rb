@@ -1,5 +1,5 @@
 %w(find erb rubygems parse_tree ruby2ruby).each {|lib| require lib}
-%w(array code_base node_analysis model view controller).each do |lib|
+%w(array code_base node_analysis model view).each do |lib|
   require "#{File.dirname(__FILE__) + "/" + lib}"
 end
 
