@@ -10,4 +10,9 @@ class Array
       end
     end
   end
+  def comparing_collect
+    accumulator = [] # collect implementation copied from Rubinius
+    stepwise {|element1, element2| accumulator << yield(element1, element2)}
+    accumulator.compact
+  end
 end

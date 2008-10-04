@@ -3,6 +3,6 @@ class View
     Ruby2Ruby.new.process(nodes) + "\n"
   end
   def render(options = {})
-    ERB.new(File.read("#{File.dirname(__FILE__) + "/" + options[:template]}"), nil, ">").result(binding)
+    ERB.new(File.read("#{File.dirname(__FILE__) + "/" + options[:template]}"), nil, "-").result(binding)
   end
 end
