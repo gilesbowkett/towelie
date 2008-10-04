@@ -13,12 +13,12 @@ class Model
     end
     def homonyms
       @method_definitions.comparing_collect do |method_definition_1, method_definition_2|
-        method_definition_1 if method_definition_1.name == method_definition_2.name
+        method_definition_1.name == method_definition_2.name
       end
     end
     def diff(threshold)
       @method_definitions.comparing_collect do |method_definition_1, method_definition_2|
-        method_definition_1 if threshold >= (method_definition_1.body - method_definition_2.body).size
+        threshold >= (method_definition_1.body - method_definition_2.body).size
       end
     end
   end
