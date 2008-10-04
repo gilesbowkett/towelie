@@ -117,10 +117,10 @@ describe Towelie do
   end
   it "isolates duplicated blocks" do
     @model.parse("spec/test_data")
-    @model.duplicated.should == @duplicated_nodes
+    @model.duplicates.should == @duplicated_nodes
 
     @model.parse("spec/classes_modules")
-    @model.duplicated.should == @duplicated_nodes
+    @model.duplicates.should == @duplicated_nodes
   end
   it "reports unique code" do
     @model.parse("spec/test_data")

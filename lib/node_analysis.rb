@@ -3,9 +3,6 @@ class Model
     def duplication?
       not duplicates.empty?
     end
-    def duplicated
-      duplicates
-    end
     def duplicates
       (@method_definitions.collect do |node|
         node if @method_definitions.duplicates? node

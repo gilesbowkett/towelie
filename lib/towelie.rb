@@ -6,13 +6,14 @@ end
 class Towelie
   def initialize
     @model = Model.new
-    @view = View.new("console.erb")
+    @view = View.new
   end
   def parse(dir)
     @model.parse(dir)
   end
-  delegate_thru_view :duplicated
   def duplicates
-    @view.render(:nodes => @model.duplicates, :unique_nodes => @model.duplicates.uniq)
+    @view.render(:template => "duplicates.erb",
+                 :nodes => @model.duplicates,
+                 :unique_nodes => @model.duplicates.uniq)
   end
 end
