@@ -152,4 +152,12 @@ describe Towelie do
     @model.parse("spec/two_node_diff")
     @model.method_definitions[0].filename.should == "spec/two_node_diff/second_file.rb"
   end
+  it "doesn't return false positives for one-node diffs" do
+    @model.parse("spec/diff_false_positives")
+    @model.diff(1).should == []
+  end
+  it "doesn't return false positives for five-node diffs" do
+    @model.parse("spec/diff_false_positives")
+    @model.diff(5).should == []
+  end
 end

@@ -18,7 +18,8 @@ class Model
     end
     def diff(threshold)
       @method_definitions.comparing_collect do |method_definition_1, method_definition_2|
-        threshold >= (method_definition_1.body - method_definition_2.body).size
+        next if method_definition_1.flatten.size < method_definition_2.flatten.size
+        threshold >= (method_definition_1.body.flatten - method_definition_2.body.flatten).size
       end
     end
   end
