@@ -15,6 +15,6 @@ class Array
     stepwise do |element1, element2|
       accumulator << element1 if yield(element1, element2)
     end
-    accumulator.compact
+    accumulator.compact.uniq
   end
 end
