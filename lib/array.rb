@@ -1,6 +1,6 @@
 class Array
   def duplicates?(element)
-    (self.select {|elem| elem == element}).size > 1 
+    grep(element).size > 1 
   end
   def stepwise
     self.each do |element1|
