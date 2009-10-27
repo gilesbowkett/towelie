@@ -11,8 +11,8 @@ found in:
   spec/test_data/second_file.rb
   spec/test_data/first_file.rb
 
-def bar
-  "something non-unique"
+def bar()
+"something non-unique"
 end
 
 DUPLICATE_BLOCK
@@ -27,16 +27,16 @@ found in:
   spec/multiple_duplicates/third_file.rb
   spec/multiple_duplicates/first_file.rb
 
-def foo
-  "something also non-unique"
+def foo()
+"something also non-unique"
 end
 
 found in:
   spec/multiple_duplicates/second_file.rb
   spec/multiple_duplicates/first_file.rb
 
-def bar
-  "something non-unique"
+def bar()
+"something non-unique"
 end
 
 DUPLICATE_BLOCK
